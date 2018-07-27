@@ -3,14 +3,14 @@ const path = require("path");
 const puppeteer = require("puppeteer");
 
 const args = process.argv.slice(2);
-if (args.length < 3) {
+if (args.length < 1) {
   console.log(
     "not enough arguments: yarn run generate-screenshots preset-file audio-analysis-file length"
   );
   process.exit(1);
 }
 
-const dir = "./screenshots";
+const dir = "./tmp/screenshots";
 if (!fs.existsSync(dir)) {
   fs.mkdirSync(dir);
 } else {
@@ -26,7 +26,21 @@ if (!fs.existsSync(dir)) {
 }
 
 const preset = JSON.parse(fs.readFileSync(args[0]).toString());
-const audioAnalysis = JSON.parse(fs.readFileSync(args[1]).toString());
+
+let audioAnalysisFile;
+if (args.length > 1) {
+  audioAnalysisFile = args[1];
+} else {
+  audioAnalysisFile = `${process.cwd()}/tmp/audioAnalysisData.json`;
+}
+const audioAnalysis = JSON.parse(fs.readFileSync(audioAnalysisFile).toString());
+
+let frameCount;
+if (args.length > 2) {
+  frameCount = Math.min(args[2], audioAnalysis.length);
+} else {
+  frameCount = audioAnalysis.length;
+}
 
 (async () => {
   const width = 800;
@@ -90,7 +104,7 @@ const audioAnalysis = JSON.parse(fs.readFileSync(args[1]).toString());
 
   let totalTime = 0;
   let expectedTime = 0;
-  for (let i = 0; i < audioAnalysis.length; i++) {
+  for (let i = 0; i < frameCount; i++) {
     const audioData = audioAnalysis[i];
 
     let elapsedTime;
@@ -122,7 +136,7 @@ const audioAnalysis = JSON.parse(fs.readFileSync(args[1]).toString());
     const mid = Date.now();
 
     await page.screenshot({
-      path: `screenshots/SS-${(i + "").padStart(5, 0)}.png`
+      path: `tmp/screenshots/SS-${(i + "").padStart(5, 0)}.png`
     });
 
     const end = Date.now();

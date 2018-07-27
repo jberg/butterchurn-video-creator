@@ -4,17 +4,22 @@ const puppeteer = require("puppeteer");
 const args = process.argv.slice(2);
 if (args.length < 1) {
   console.log(
-    "not enough arguments: yarn run generate-audio audio-file length"
+    "not enough arguments: yarn run generate-audio audio-file-path length-in-ms"
   );
   process.exit(1);
 }
 
-const audioFile = `${process.cwd()}/${args[0]}`;
+const audioFile = args[0];
 let audioTime;
 if (args.length > 1) {
   audioTime = args[1];
 } else {
   audioTime = 10000;
+}
+
+const dir = "./tmp";
+if (!fs.existsSync(dir)) {
+  fs.mkdirSync(dir);
 }
 
 (async () => {
@@ -50,7 +55,7 @@ if (args.length > 1) {
       clearTimeout(audioLoopTimeout);
 
       fs.writeFileSync(
-        "./audioAnalysisData.json",
+        "./tmp/audioAnalysisData.json",
         JSON.stringify(audioAnalysisData)
       );
 

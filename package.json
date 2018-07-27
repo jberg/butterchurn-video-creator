@@ -15,7 +15,8 @@
   "author": "Jordan Berg <jordannealberg@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "puppeteer": "^1.6.1"
+    "puppeteer": "^1.6.1",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {}
 }
