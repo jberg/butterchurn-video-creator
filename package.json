@@ -1,0 +1,21 @@
+{
+  "name": "butterchurn-video-creator",
+  "version": "0.0.1",
+  "description": "Create videos of Milkdrop presets using Butterchurn",
+  "scripts": {
+    "generate-audio": "node --max-old-space-size=8192 src/generateAudioAnalysis.js",
+    "generate-screenshots": "node --max-old-space-size=8192 src/generateScreenshots.js",
+    "create-video-from-screenshots": "node --max-old-space-size=8192 src/createVideoFromScreenshots.js"
+  },
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jberg/butterchurn-video-creator.git"
+  },
+  "author": "Jordan Berg <jordannealberg@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "puppeteer": "^1.6.1"
+  },
+  "devDependencies": {}
+}
