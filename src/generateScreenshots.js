@@ -78,8 +78,8 @@ if (args.length > 2) {
           const visualizer = butterchurn.createVisualizer(null, canvas , {
             width: ${width},
             height: ${height},
-            mesh_width: 64,
-            mesh_height: 48,
+            meshWidth: 64,
+            meshHeight: 48,
             pixelRatio: 1,
             textureRatio: 2,
           });
