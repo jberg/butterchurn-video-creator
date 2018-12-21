@@ -25,6 +25,9 @@ if (!fs.existsSync(dir)) {
   });
 }
 
+let presetName = path.basename(args[0]);
+presetName = presetName.substring(0, presetName.length - 5);
+
 const preset = JSON.parse(fs.readFileSync(args[0]).toString());
 
 let audioAnalysisFile;
@@ -85,6 +88,10 @@ if (args.length > 2) {
             visualizer.loadPreset(preset, 0);
           }
 
+          window.launchSongTitleAnim = (text) => {
+            visualizer.launchSongTitleAnim(text);
+          }
+
           window.render = (opts) => {
             visualizer.render(opts);
           }
@@ -101,6 +108,8 @@ if (args.length > 2) {
   await page.goto(`data:text/html;charset=UTF-8,${html}`);
 
   await page.evaluate(preset => window.loadPreset(preset), preset);
+
+  await page.evaluate(text => window.launchSongTitleAnim(text), presetName);
 
   let totalTime = 0;
   let expectedTime = 0;
