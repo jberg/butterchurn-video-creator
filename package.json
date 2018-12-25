@@ -3,9 +3,10 @@
   "version": "0.0.1",
   "description": "Create videos of Milkdrop presets using Butterchurn",
   "scripts": {
-    "generate-audio": "node --max-old-space-size=8192 src/generateAudioAnalysis.js",
-    "generate-screenshots": "node --max-old-space-size=8192 src/generateScreenshots.js",
-    "create-video-from-screenshots": "node --max-old-space-size=8192 src/createVideoFromScreenshots.js"
+    "generate-audio": "node src/generateAudioAnalysis.js",
+    "generate-screenshots": "node src/generateScreenshots.js",
+    "create-video-from-screenshots": "node src/createVideoFromScreenshots.js",
+    "generate-preview-screenshot": "node src/generateSingleScreenshot.js"
   },
   "main": "src/index.js",
   "repository": {
