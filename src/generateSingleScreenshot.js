@@ -86,39 +86,44 @@ const outputDir = args[3];
     </body>
   </html>`;
   await page.setViewport({ width, height, deviceScaleFactor: 1 });
-  await page.goto(`data:text/html;charset=UTF-8,${html}`);
 
-  await page.evaluate(preset => window.loadPreset(preset), preset);
+  try {
+    await page.goto(`data:text/html;charset=UTF-8,${html}`);
 
-  await page.evaluate(text => window.launchSongTitleAnim(text), presetName);
+    await page.evaluate(preset => window.loadPreset(preset), preset);
 
-  for (let i = 0; i < frameCount; i++) {
-    const audioData = audioAnalysis[i];
+    await page.evaluate(text => window.launchSongTitleAnim(text), presetName);
 
-    let elapsedTime;
-    if (i === 0) {
-      elapsedTime = audioData.time;
-    } else {
-      elapsedTime = audioData.time - audioAnalysis[i - 1].time;
+    for (let i = 0; i < frameCount; i++) {
+      const audioData = audioAnalysis[i];
+
+      let elapsedTime;
+      if (i === 0) {
+        elapsedTime = audioData.time;
+      } else {
+        elapsedTime = audioData.time - audioAnalysis[i - 1].time;
+      }
+
+      const renderOpts = {
+        elapsedTime,
+        audioLevels: {
+          timeByteArray: audioData.timeByteArray,
+          timeByteArrayL: audioData.timeByteArrayL,
+          timeByteArrayR: audioData.timeByteArrayR
+        }
+      };
+
+      await page.evaluate(renderOpts => {
+        window.render(renderOpts);
+      }, renderOpts);
     }
 
-    const renderOpts = {
-      elapsedTime,
-      audioLevels: {
-        timeByteArray: audioData.timeByteArray,
-        timeByteArrayL: audioData.timeByteArrayL,
-        timeByteArrayR: audioData.timeByteArrayR
-      }
-    };
-
-    await page.evaluate(renderOpts => {
-      window.render(renderOpts);
-    }, renderOpts);
+    await page.screenshot({
+      path: `${outputDir}/${presetName}.png`
+    });
+  } catch (e) {
+    console.error(e);
   }
-
-  await page.screenshot({
-    path: `${outputDir}/${presetName}.png`
-  });
 
   await browser.close();
 })();
