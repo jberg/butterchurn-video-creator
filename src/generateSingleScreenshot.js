@@ -87,6 +87,11 @@ const outputDir = args[3];
   </html>`;
   await page.setViewport({ width, height, deviceScaleFactor: 1 });
 
+  const timeout = setTimeout(async () => {
+    console.log('Timed out, killing process');
+    await browser.close();
+  }, 180000);
+
   try {
     await page.goto(`data:text/html;charset=UTF-8,${html}`);
 
@@ -125,5 +130,7 @@ const outputDir = args[3];
     console.error(e);
   }
 
+  clearTimeout(timeout);
+  
   await browser.close();
 })();
