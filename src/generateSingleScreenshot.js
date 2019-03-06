@@ -46,9 +46,14 @@ const outputDir = args[3];
         crossorigin="anonymous"></script>
 
       <style>
+        body {
+          overflow: hidden;
+        }
+
         #canvas:fullscreen {
           width: 100%;
           height: 100%;
+          overflow: hidden;
         }
       </style>
       <link rel="stylesheet" href="https://unpkg.com/normalize.css/normalize.css" />
@@ -80,7 +85,7 @@ const outputDir = args[3];
       </script>
     </head>
     <body>
-      <div>
+      <div style='overflow: hidden;'>
         <canvas id='canvas' width='${width}' height='${height}'></canvas>
       </div>
     </body>
