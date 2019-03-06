@@ -75,7 +75,7 @@ if (args.length > 2) {
       <script>
         $(function() {
           const canvas = document.getElementById('canvas');
-          const visualizer = butterchurn.createVisualizer(null, canvas , {
+          const visualizer = butterchurn.default.createVisualizer(null, canvas , {
             width: ${width},
             height: ${height},
             meshWidth: 64,
