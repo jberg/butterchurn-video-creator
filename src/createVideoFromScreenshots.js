@@ -14,6 +14,6 @@ const audioFile = args[0];
 
 (async () => {
   await execSync(
-    `ffmpeg -y -framerate 30 -i tmp/screenshots/SS-%05d.png -i ${audioFile} -shortest -c:v libx264 -profile:v high -crf 20 -pix_fmt yuv420p tmp/${uuidv1()}.mp4`
+    `ffmpeg -y -framerate 30 -i tmp/screenshots/SS-%05d.png -c:v libx264 -profile:v high -crf 20 -pix_fmt yuv420p tmp/${uuidv1()}.mp4`
   );
 })();
